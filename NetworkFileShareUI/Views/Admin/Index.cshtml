@@ -1,0 +1,48 @@
+﻿@model NetworkFileShareUI.ViewModels.IndexViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Header -->
+<!-- Header -->
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Folders</h6>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a href="@Url.Action("AddFolder","Admin")" class="btn btn-sm btn-neutral">New</a>
+                    <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row justify-content-center">
+        <div class=" col ">
+            <div class="card" style="min-height:500px;">
+                <div class="card-body">
+                    <div class="row icon-examples">
+                        @foreach (var fld in Model.Folders)
+                        {
+                            <div class="col-lg-3 col-md-6 d-flex">
+                                <a href="@Url.Action("Folder","File",new { Id = fld.Id })" class="btn-icon-clipboard" style="background-color:@fld.FolderColorName;">
+                                    <div style="font-family:FontAwesome;margin-bottom:5px;">
+                                        <i>@System.Net.WebUtility.HtmlDecode(fld.FolderIconName)</i>
+                                        <span style="font-family:inherit;">@fld.Name</span>
+                                    </div>
+                                    <small>@fld.Username</small>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewData["Title"] - NetworkFileShare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="icon" href="@Url.Content("~/assets/img/brand/favicon.ico")">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/font.css")">
+    <!-- Icons -->
+    <link rel="stylesheet" href="@Url.Content("~/assets/vendor/nucleo/css/nucleo.css")" type="text/css">
+    <link rel="stylesheet" href="@Url.Content("~/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css")" type="text/css">
+    <!-- Page plugins -->
+    <!-- Argon CSS -->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/argon.css?v=1.2.0")" type="text/css">
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/font-awesome.min.css")">
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+      <!-- Sidenav -->
+  <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+    <div class="scrollbar-inner">
+      <!-- Brand -->
+      <div class="sidenav-header  align-items-center">
+        <a class="navbar-brand" href="javascript:void(0)">
+          <img src="@Url.Content("~/assets/img/brand/blue.png")" class="navbar-brand-img" alt="...">
+        </a>
+      </div>
+      <div class="navbar-inner">
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+          <!-- Nav items -->
+          <ul class="navbar-nav" id="PrimaryNav">
+            <li class="nav-item">
+              <a class="nav-link active" id="navDashboard" href="@Url.Action("Index","Admin")">
+                <i class="ni ni-tv-2 text-primary"></i>
+                <span class="nav-link-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="navFolders" href="@Url.Action("Folders","Admin")">
+                <i class="ni ni-folder-17 text-orange"></i>
+                <span class="nav-link-text">Folders</span>
+              </a>
+            </li>
+            @if (User.Identity.IsAuthenticated)
+            {
+                @if (User.Claims.FirstOrDefault(p => p.Type == System.Security.Claims.ClaimTypes.Role).Value == "true")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" id="navUsers" href="@Url.Action("Users","Admin")">
+                            <i class="ni ni-circle-08 text-pink"></i>
+                            <span class="nav-link-text">Users</span>
+                        </a>
+                    </li>
+                }
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- Main content -->
+  <div class="main-content" id="panel">
+    <!-- Topnav -->
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Navbar links -->
+          <ul class="navbar-nav align-items-center  ml-md-auto ">
+            <li class="nav-item d-xl-none">
+              <!-- Sidenav toggler -->
+              <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+            <li class="nav-item dropdown">
+              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="media align-items-center">
+                  <span class="avatar avatar-sm rounded-circle">
+                  <img alt="Image placeholder" src="@Url.Content("~/assets/img/theme/team-4.jpg")">
+                  </span>
+                    <div class="media-body  ml-2  d-none d-lg-block">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <span class="mb-0 text-sm  font-weight-bold">@User.Identity.Name</span>
+                        }
+                        else
+                        {
+                            <span class="mb-0 text-sm  font-weight-bold">unknown user</span>
+                        }
+                    </div>
+                </div>
+              </a>
+              <div class="dropdown-menu  dropdown-menu-right ">
+                <div class="dropdown-header noti-title">
+                  <h6 class="text-overflow m-0">Welcome!</h6>
+                </div>
+                <a href="@Url.Action("Profile","Admin")" class="dropdown-item">
+                  <i class="ni ni-single-02"></i>
+                  <span>My profile</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="@Url.Action("Logout","Admin")" class="dropdown-item">
+                  <i class="ni ni-user-run"></i>
+                  <span>Logout</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+        @RenderBody()
+  </div>
+  <!-- Argon Scripts -->
+  <!-- Core -->
+    <script src="@Url.Content("~/assets/vendor/jquery/dist/jquery.min.js")"></script>
+    <script src="@Url.Content("~/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js")"></script>
+    <script src="@Url.Content("~/assets/vendor/js-cookie/js.cookie.js")"></script>
+    <script src="@Url.Content("~/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js")"></script>
+    <script src="@Url.Content("~/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js")"></script>
+  <!-- Argon JS -->
+    <script src="@Url.Content("~/assets/js/argon.js?v=1.2.0")"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

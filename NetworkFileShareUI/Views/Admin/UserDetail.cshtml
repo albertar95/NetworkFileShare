@@ -1,0 +1,95 @@
+﻿@model Application.DTO.User.UserDTO
+@{
+    ViewData["Title"] = "UserDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h1 class="display-2 text-white">user detail</h1>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-xl-12 order-xl-1">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0"></h3>
+                        </div>
+                        <div class="col-4 text-right">
+                            <a href="@Url.Action("Users","Admin")" class="btn btn-sm btn-primary">users</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <h6 class="heading-small text-muted mb-4">User information</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Fullname</label>
+                                        <input type="text" id="input-username" class="form-control" value="@Model.Fullname" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Username</label>
+                                        <input type="text" id="input-email" class="form-control" value="@Model.Username" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Admin</label>
+                                        @if(Model.IsAdmin)
+                                        {
+                                         <input type="text" id="input-username" class="form-control" value="true" readonly>   
+                                        }else
+                                        {
+                                            <input type="text" id="input-username" class="form-control" value="false" readonly>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Disabled</label>
+                                        @if (Model.IsDisabled)
+                                        {
+                                            <input type="text" id="input-username" class="form-control" value="true" readonly>
+                                        }
+                                        else
+                                        {
+                                            <input type="text" id="input-username" class="form-control" value="false" readonly>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Last Login Date</label>
+                                        <input type="text" id="input-username" class="form-control" value="@Model.LastLoginDate" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

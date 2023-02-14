@@ -1,0 +1,115 @@
+﻿@model NetworkFileShareUI.ViewModels.UpdateFolderViewModel
+@{
+    ViewData["Title"] = "EditFolder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h1 class="display-2 text-white">Edit folder form</h1>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-xl-12 order-xl-1">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0"> </h3>
+                        </div>
+                        <div class="col-4 text-right">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="pl-lg-4 col-lg-4">
+                        <form role="form" method="post" action="@Url.Action("SubmitEditFolder","Admin")">
+                            <input type="text" id="Id" name="Id" value="@Model.Folder.Id" hidden />
+                            <input type="text" id="Path" name="Path" value="@Model.Folder.Path" hidden />
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-atom"></i></span>
+                                    </div>
+                                    <input class="form-control" value="@Model.Folder.Name" type="text" name="Name" autofocus>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" id="AccessLevelId" name="AccessLevelId">
+                                    <option disabled>select Access Level</option>
+                                    @foreach (var item in Model.AccessLevels)
+                                    {
+                                        if (Model.Folder.AccessLevelId == item.Id)
+                                        {
+                                            <option value="@item.Id" selected>@item.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" id="FolderIconId" name="FolderIconId" style="font-family:FontAwesome;">
+                                    <option disabled>select Folder Icon</option>
+                                    @foreach (var item in Model.FolderIcons)
+                                    {
+                                        if(Model.Folder.FolderIconId == item.Id)
+                                        {
+                                            <!option value="@item.Id" selected>@System.Net.WebUtility.HtmlDecode(item.IconCode)</!option>
+                                        }else
+                                        {
+                                            <!option value="@item.Id">@System.Net.WebUtility.HtmlDecode(item.IconCode)</!option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" id="FolderColorId" name="FolderColorId" style="background-color:@Model.Folder.FolderColorName;">
+                                    <option disabled>select Folder Color</option>
+                                    @foreach (var item in Model.FolderColors)
+                                    {
+                                        if (Model.Folder.FolderColorId == item.Id)
+                                        {
+                                            <option value="@item.Id" style="background-color: @item.ColorCode;" selected>@item.ColorCode</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id" style="background-color: @item.ColorCode;">@item.ColorCode</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-warning mt-4">Edit Folder</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+    $(function()
+    {
+            $("#FolderColorId").on('change',function()
+            {
+                $("#FolderColorId").css('background-color', $("#FolderColorId").find(":selected").text());
+            });
+    });    
+    </script>
+}

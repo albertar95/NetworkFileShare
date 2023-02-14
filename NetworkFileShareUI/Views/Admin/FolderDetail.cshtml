@@ -1,0 +1,100 @@
+﻿@model Application.DTO.Folder.FolderDTO
+@{
+    ViewData["Title"] = "FolderDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h1 class="display-2 text-white">folder detail</h1>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-xl-12 order-xl-1">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0"></h3>
+                        </div>
+                        <div class="col-4 text-right">
+                            <a href="@Url.Action("Folders","Admin")" class="btn btn-sm btn-primary">folders</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <h6 class="heading-small text-muted mb-4">Folder information</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Name</label>
+                                        <input type="text" id="input-username" class="form-control" value="@Model.Name" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Folder Type</label>
+                                        <input type="text" id="input-username" class="form-control" value="@Model.FolderTypeName" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Path</label>
+                                        <input type="text" id="input-username" class="form-control" value="@Model.Path" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Access Level</label>
+                                        <input type="text" id="input-email" class="form-control" placeholder="@Model.AccessLevelName" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Username</label>
+                                        <input type="text" id="input-username" class="form-control" value="@Model.Username" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Create Date</label>
+                                        <input type="text" id="input-email" class="form-control" placeholder="@Model.CreateDate" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">color</label>
+                                        <input type="text" id="input-username" class="form-control" style="background-color:@Model.FolderColorName;" value="@Model.FolderColorName" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group" style="font-family:FontAwesome;">
+                                        <label class="form-control-label" for="input-email">icon</label>
+                                        <input type="text" id="input-email" class="form-control" placeholder="@System.Net.WebUtility.HtmlDecode(Model.FolderIconName)" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+﻿@model NetworkFileShareUI.ViewModels.FileViewModel
+@{
+    ViewData["Title"] = "ViewFile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a href="@Url.Action("Folder","File", new { Id = Model.FolderId })" class="btn btn-sm btn-neutral"> Return To Folder </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-xl-12 order-xl-1">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">@Model.Name</h2>
+                    @switch (Model.FileType)
+                    {
+                        case "movies":
+                        <video style="width:100%;height:500px;" controls>
+                                <source src="@Model.FileSource">
+                        </video>
+                            break;
+                        case "photos":
+                        <img style="width:100%;" src="@Model.FileSource" />
+                            break;
+                        case "musics":
+                        <audio style="width:50%;" controls>
+                            <source src="@Model.FileSource" type="audio/@Model.FileExt">
+                        </audio>
+                            break;
+                        case "documents":
+                            <iframe src="@Model.FileSource" style="width:100%;height:500px;" allowfullscreen></iframe>
+                            break;
+                        case "compresses":
+                        <p>compress files doesnt have a demostration.try download it.redirect to dashboard : <a class="btn-primary btn" href="@Url.Action("Index","Admin")">dashboard</a> </p>
+                            break;
+                        default:
+                        <p>unknown file type.redirect to dashboard : <a class="btn-primary btn" href="@Url.Action("Index","Admin")">dashboard</a> </p>
+                            break;
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

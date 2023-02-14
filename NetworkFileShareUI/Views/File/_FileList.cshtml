@@ -1,0 +1,20 @@
+﻿@model List<Application.DTO.File.FileDTO>
+@foreach (var file in Model.OrderByDescending(p => p.CreateDate))
+{
+    <tr>
+        <td>
+            @file.Name
+        </td>
+        <td>
+            @file.CreateDate
+        </td>
+        <td>
+            @file.FileExt
+        </td>
+        <td>
+            <a href="@Url.Action("ViewFile","File",new { Id = file.Id })" class="btn btn-info"><i class="fa fa-eye"></i> view </a>
+            <a href="@Url.Action("DownloadFile","File",new { Id = file.Id })" class="btn btn-primary"><i class="fa fa-cloud-download"></i> download </a>
+            <a href="#" onclick="DeleteFile('@file.Id','@file.FolderId','@file.Name')" class="btn btn-danger"><i class="fa fa-trash"></i> delete </a>
+        </td>
+    </tr>
+}
