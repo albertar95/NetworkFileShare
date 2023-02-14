@@ -62,7 +62,8 @@ namespace Application.Helpers
                     AccessLevelId = accessLevelId,
                     FolderId = folderId,
                     FileExt = Path.GetExtension(file.Name),
-                    Name = file.Name
+                    Name = file.Name,
+                    FileLength = GetFileLength(file.Length)
                 });
             }
             return result;
@@ -110,6 +111,19 @@ namespace Application.Helpers
                 }
             }
             return result;
+        }
+        public static string GetFileLength(long length)
+        {
+            if (length < 1024)
+                return $"{length} bytes";
+            else if (length >= 1024 && length < 1048576)
+                return $"{((decimal)length / (decimal)1024).ToString("#.##")} KB";
+            else if (length >= 1048576 && length < 1073741824)
+                return $"{((decimal)length / (decimal)1048576).ToString("#.##")} MB";
+            else if (length >= 1073741824 && length < 1099511627776)
+                return $"{((decimal)length / (decimal)1073741824).ToString("#.##")} GB";
+            else
+                return $"{length} bytes";
         }
     }
 }

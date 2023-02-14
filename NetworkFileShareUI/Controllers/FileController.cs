@@ -59,6 +59,7 @@ namespace NetworkFileShareUI.Controllers
                 {
                     CreateFileDTO newfile = new CreateFileDTO();
                     newfile.Name = item.FileName;
+                    newfile.FileLength = DirectoryHelper.GetFileLength(item.Length);
                     newfile.FileExt = Path.GetExtension(newfile.Name);
                     newfile.AccessLevelId = Guid.Parse(data["AccessLevel"].ToString());
                     newfile.FolderId = Guid.Parse(data["Folder"].ToString());

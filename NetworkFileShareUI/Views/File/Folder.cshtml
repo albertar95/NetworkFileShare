@@ -30,13 +30,13 @@
         <div class="col-xl-12 order-xl-1">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="card-title">@Model.Folder.Name</h2>
+                    <h2 class="card-title">@Model.Folder.Name (@Model.Folder.FolderTypeName folder)</h2>
                     <div class="table-responsive">
                         <table class="table align-items-center table-dark table-flush">
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">File Name</th>
-                                    <th scope="col">Create Date</th>
+                                    <th scope="col">File Length</th>
                                     <th scope="col">File Type</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -46,18 +46,28 @@
                                 {
                                     <tr>
                                         <td>
-                                            @file.Name
+                                            <a href="@Url.Action("ViewFile","File",new { Id = file.Id })" style="color:white;">@file.Name</a>
                                         </td>
-                                        <td>
-                                            @file.CreateDate
-                                        </td>
+                                        @if (string.IsNullOrWhiteSpace(file.FileLength))
+                                        {
+                                            <td> N/A
+                                            </td>
+                                        }else
+                                        {
+                                            <td>
+                                                @file.FileLength
+                                            </td>
+                                        }
                                         <td>
                                             @file.FileExt
                                         </td>
                                         <td>
                                             <a href="@Url.Action("ViewFile","File",new { Id = file.Id })" class="btn btn-info"><i class="fa fa-eye"></i> view </a>
                                             <a href="@Url.Action("DownloadFile","File",new { Id = file.Id })" class="btn btn-primary"><i class="fa fa-cloud-download"></i> download </a>
-                                            <a href="#" onclick="DeleteFile('@file.Id','@file.FolderId','@file.Name')" class="btn btn-danger"><i class="fa fa-trash"></i> delete </a>
+                                            @if(Model.Folder.FolderTypeName.ToLower() != "server")
+                                            {
+                                                <a href="#" onclick="DeleteFile('@file.Id','@file.FolderId','@file.Name')" class="btn btn-danger"><i class="fa fa-trash"></i> delete </a>
+                                            }
                                         </td>
                                     </tr>
                                 }

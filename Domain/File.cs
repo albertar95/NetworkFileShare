@@ -11,6 +11,7 @@ namespace Domain
     {
         public string Name { get; set; }
         public string FileExt { get; set; }
+        public string? FileLength { get; set; }
         public Guid AccessLevelId { get; set; }
         public Guid FolderId { get; set; }
         public virtual AccessLevel AccessLevel { get; set; }

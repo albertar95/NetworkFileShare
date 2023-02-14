@@ -12,6 +12,7 @@ namespace Application.DTO.File
         public DateTime CreateDate { get; set; }
         public DateTime? LastModified { get; set; }
         public string Name { get; set; }
+        public string? FileLength { get; set; }
         public string FileExt { get; set; }
         public Guid FolderId { get; set; }
         public string FolderName { get; set; }
