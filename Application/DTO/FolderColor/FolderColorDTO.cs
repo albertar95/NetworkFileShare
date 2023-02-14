@@ -9,6 +9,7 @@ namespace Application.DTO.FolderColor
     public class FolderColorDTO
     {
         public string ColorCode { get; set; }
+        public string? ColorName { get; set; }
         public Guid Id { get; set; }
     }
 }

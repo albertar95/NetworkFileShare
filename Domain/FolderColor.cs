@@ -10,6 +10,7 @@ namespace Domain
     public class FolderColor : BaseProperties
     {
         public string ColorCode { get; set; }
+        public string? ColorName { get; set; }
         public virtual List<Folder> Folders { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace Application.DTO.FolderIcon
     public class FolderIconDTO
     {
         public string IconCode { get; set; }
+        public string? IconName { get; set; }
         public Guid Id { get; set; }
     }
 }

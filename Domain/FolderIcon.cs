@@ -10,6 +10,7 @@ namespace Domain
     public class FolderIcon : BaseProperties
     {
         public string IconCode { get; set; }
+        public string? IconName { get; set; }
         public virtual List<Folder> Folders { get; set; }
     }
 }

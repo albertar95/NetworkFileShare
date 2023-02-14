@@ -66,10 +66,10 @@
                                     {
                                         if(Model.Folder.FolderIconId == item.Id)
                                         {
-                                            <!option value="@item.Id" selected>@System.Net.WebUtility.HtmlDecode(item.IconCode)</!option>
+                                            <!option value="@item.Id" selected>@System.Net.WebUtility.HtmlDecode(item.IconCode) @item.IconName</!option>
                                         }else
                                         {
-                                            <!option value="@item.Id">@System.Net.WebUtility.HtmlDecode(item.IconCode)</!option>
+                                            <!option value="@item.Id">@System.Net.WebUtility.HtmlDecode(item.IconCode) @item.IconName</!option>
                                         }
                                     }
                                 </select>
@@ -81,11 +81,11 @@
                                     {
                                         if (Model.Folder.FolderColorId == item.Id)
                                         {
-                                            <option value="@item.Id" style="background-color: @item.ColorCode;" selected>@item.ColorCode</option>
+                                            <option value="@item.Id" style="background-color: @item.ColorCode;" selected>@item.ColorName</option>
                                         }
                                         else
                                         {
-                                            <option value="@item.Id" style="background-color: @item.ColorCode;">@item.ColorCode</option>
+                                            <option value="@item.Id" style="background-color: @item.ColorCode;">@item.ColorName</option>
                                         }
                                     }
                                 </select>

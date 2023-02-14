@@ -64,7 +64,7 @@
                                     <option disabled selected>select Folder Icon</option>
                                     @foreach (var item in Model.FolderIcons)
                                     {
-                                        <!option value="@item.Id">@System.Net.WebUtility.HtmlDecode(item.IconCode)</!option>
+                                        <!option value="@item.Id">@System.Net.WebUtility.HtmlDecode(item.IconCode) @item.IconName</!option>
                                     }
                                 </select>
                             </div>
@@ -73,7 +73,7 @@
                                     <option disabled selected>select Folder Color</option>
                                     @foreach (var item in Model.FolderColors)
                                     {
-                                        <option value="@item.Id" style="background-color:@item.ColorCode;">@item.ColorCode</option>
+                                        <option value="@item.Id" style="background-color:@item.ColorCode;">@item.ColorName</option>
                                     }
                                 </select>
                             </div>
