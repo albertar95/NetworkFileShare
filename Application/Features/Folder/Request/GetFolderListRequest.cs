@@ -12,5 +12,7 @@ namespace Application.Features.Folder.Request
     {
         public Guid UserId { get; set; }
         public bool IncludePublics { get; set; }
+        public string? FolderIconFilter { get; set; }
+        public string? FolderNameFilter { get; set; }
     }
 }

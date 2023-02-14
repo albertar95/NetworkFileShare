@@ -30,15 +30,58 @@ namespace Infra.Persistence.Repository
                 return await _context.Folders.FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<List<Folder>> GetFolders(Guid UserId, bool IncludePublics = false)
+        public async Task<List<Folder>> GetFolders(Guid UserId, bool IncludePublics = false, string FolderIconId = "", string FolderName = "")
         {
-            var result = await _context.Folders.Include(p => p.AccessLevel).Include(p => p.FolderColor).Include(p => p.FolderIcon)
-                .Include(p => p.FolderType).Include(p => p.User).Where(p => p.UserId == UserId).ToListAsync();
-            //add public folders
-            if(IncludePublics)
+            List<Folder> result = new List<Folder>();
+            if(string.IsNullOrWhiteSpace(FolderIconId) && string.IsNullOrWhiteSpace(FolderName))
             {
-                result.AddRange(_context.Folders.Include(p => p.AccessLevel).Include(p => p.FolderColor).Include(p => p.FolderIcon)
-                .Include(p => p.FolderType).Include(p => p.User).Where(p => p.AccessLevel.Name == "public" && p.UserId != UserId));
+                result.AddRange(await _context.Folders.Include(p => p.AccessLevel).Include(p => p.FolderColor).Include(p => p.FolderIcon)
+    .Include(p => p.FolderType).Include(p => p.User).Where(p => p.UserId == UserId).ToListAsync());
+                //add public folders
+                if (IncludePublics)
+                {
+                    result.AddRange(_context.Folders.Include(p => p.AccessLevel).Include(p => p.FolderColor).Include(p => p.FolderIcon)
+                    .Include(p => p.FolderType).Include(p => p.User).Where(p => p.AccessLevel.Name == "public" && p.UserId != UserId));
+                }
+            }
+            else if (string.IsNullOrWhiteSpace(FolderIconId) && !string.IsNullOrWhiteSpace(FolderName))
+            {
+                result.AddRange(await _context.Folders.Include(p => p.AccessLevel).Include(p => p.FolderColor).Include(p => p.FolderIcon)
+    .Include(p => p.FolderType).Include(p => p.User)
+    .Where(p => p.UserId == UserId && p.Name.Contains(FolderName)).ToListAsync());
+                //add public folders
+                if (IncludePublics)
+                {
+                    result.AddRange(_context.Folders.Include(p => p.AccessLevel).Include(p => p.FolderColor).Include(p => p.FolderIcon)
+                    .Include(p => p.FolderType).Include(p => p.User)
+                    .Where(p => p.AccessLevel.Name == "public" && p.UserId != UserId && p.Name.Contains(FolderName)));
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(FolderIconId) && string.IsNullOrWhiteSpace(FolderName))
+            {
+                result.AddRange(await _context.Folders.Include(p => p.AccessLevel).Include(p => p.FolderColor).Include(p => p.FolderIcon)
+    .Include(p => p.FolderType).Include(p => p.User)
+    .Where(p => p.UserId == UserId && p.FolderIconId.ToString() == FolderIconId).ToListAsync());
+                //add public folders
+                if (IncludePublics)
+                {
+                    result.AddRange(_context.Folders.Include(p => p.AccessLevel).Include(p => p.FolderColor).Include(p => p.FolderIcon)
+                    .Include(p => p.FolderType).Include(p => p.User)
+                    .Where(p => p.AccessLevel.Name == "public" && p.UserId != UserId && p.FolderIconId.ToString() == FolderIconId));
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(FolderIconId) && !string.IsNullOrWhiteSpace(FolderName))
+            {
+                result.AddRange(await _context.Folders.Include(p => p.AccessLevel).Include(p => p.FolderColor).Include(p => p.FolderIcon)
+    .Include(p => p.FolderType).Include(p => p.User)
+    .Where(p => p.UserId == UserId && p.FolderIconId.ToString() == FolderIconId && p.Name.Contains(FolderName)).ToListAsync());
+                //add public folders
+                if (IncludePublics)
+                {
+                    result.AddRange(_context.Folders.Include(p => p.AccessLevel).Include(p => p.FolderColor).Include(p => p.FolderIcon)
+                    .Include(p => p.FolderType).Include(p => p.User)
+                    .Where(p => p.AccessLevel.Name == "public" && p.UserId != UserId && p.FolderIconId.ToString() == FolderIconId && p.Name.Contains(FolderName)));
+                }
             }
             return result;
         }

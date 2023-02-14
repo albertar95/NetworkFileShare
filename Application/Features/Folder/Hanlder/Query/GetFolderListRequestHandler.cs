@@ -23,7 +23,7 @@ namespace Application.Features.Folder.Hanlder.Query
         }
         public async Task<List<FolderDTO>> Handle(GetFolderListRequest request, CancellationToken cancellationToken)
         {
-            return _mapper.Map<List<FolderDTO>>(await _folderRepository.GetFolders(request.UserId,request.IncludePublics));
+            return _mapper.Map<List<FolderDTO>>(await _folderRepository.GetFolders(request.UserId,request.IncludePublics,request.FolderIconFilter,request.FolderNameFilter));
         }
     }
 }

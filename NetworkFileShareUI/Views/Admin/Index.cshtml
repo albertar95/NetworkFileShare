@@ -15,7 +15,21 @@
                 </div>
                 <div class="col-lg-6 col-5 text-right">
                     <a href="@Url.Action("AddFolder","Admin")" class="btn btn-sm btn-neutral">New</a>
-                    <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+                    <a href="#" id="btnFilter" class="btn btn-sm btn-neutral">Filters</a>
+                    <div id="FilterSection" hidden>
+                        <div class="d-flex">
+                            <input type="search" class="form-control" id="txtSearch" placeholder="search" oninput="FilterThis()" style="width: 50%;margin-top: 10px;">
+                            <select class="form-control" id="sltFolderType" onchange="FilterThis()" style="width: 40%;margin-top: 10px;margin-left: 2%;font-family:FontAwesome;">
+                                <option disabled selected value="">select folder Type</option>
+                                <option value="">all</option>
+                                @foreach (var item in Model.FolderIcons)
+                                {
+                                    <!option value="@item.Id">@System.Net.WebUtility.HtmlDecode(item.IconCode) @item.IconName</!option>
+                                }
+                            </select>
+                            <p style="color: white;margin-top: 20px;margin-left: 2%;">filter</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -27,7 +41,7 @@
         <div class=" col ">
             <div class="card" style="min-height:500px;">
                 <div class="card-body">
-                    <div class="row icon-examples">
+                    <div class="row icon-examples" id="folderWrapper">
                         @foreach (var fld in Model.Folders)
                         {
                             <div class="col-lg-3 col-md-6 d-flex">
@@ -46,3 +60,38 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+    $(function()
+    {
+            $("#btnFilter").click(function(e)
+            {
+                e.preventDefault();
+                if ($("#FilterSection").is(":hidden"))
+                {
+                    $("#FilterSection").removeAttr('hidden');
+                }else
+                {
+                    $("#FilterSection").attr('hidden','hidden');
+                }
+            });
+    });  
+        function FilterThis()
+        {
+            $.ajax(
+                {
+                    url: '@Url.Action("FilterFolders","Admin")',
+                    type: 'post',
+                    datatype: 'json',
+                    data: { FolderIcon: $("#sltFolderType").find(":selected").val(), FolderName: $("#txtSearch").val() },
+                    success: function (result) {
+                        if (result.hasvalue)
+                            $("#folderWrapper").html(result.html);
+                    },
+                    error: function () { }
+                });
+        }
+    </script>
+}

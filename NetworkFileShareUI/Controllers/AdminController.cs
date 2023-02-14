@@ -16,6 +16,7 @@ using Application.DTO.AccessLevel;
 using Application.DTO.FolderIcon;
 using Application.DTO.FolderType;
 using Application.DTO.FolderColor;
+using System.Reflection;
 
 namespace NetworkFileShareUI.Controllers
 {
@@ -38,7 +39,19 @@ namespace NetworkFileShareUI.Controllers
             var result = await _apiHelper.Call(ApiHelper.HttpMethods.Get, $"{_baseAddress}/Users/{User.Claims.FirstOrDefault(p => p.Type == ClaimTypes.Sid).Value}/Folders?IncludePublics=true");
             if (result.IsSuccessfulResult())
                 model.Folders = _apiHelper.Deserialize<List<FolderDTO>>(result.Content);
+            var folderIconResult = await _apiHelper.Call(ApiHelper.HttpMethods.Get, $"{_baseAddress}/Folders/FolderIcons");
+            if (folderIconResult.IsSuccessfulResult())
+                model.FolderIcons = _apiHelper.Deserialize<List<FolderIconDTO>>(folderIconResult.Content);
             return View(model);
+        }
+        public async Task<IActionResult> FilterFolders(string FolderIcon = "",string FolderName = "") 
+        {
+            List<FolderDTO> folders = new List<FolderDTO>();
+            var result = await _apiHelper.Call(ApiHelper.HttpMethods.Get, 
+                $"{_baseAddress}/Users/{User.Claims.FirstOrDefault(p => p.Type == ClaimTypes.Sid).Value}/Folders?IncludePublics=true&FilterByIconId={FolderIcon}&FilterByFolderName={FolderName}");
+            if (result.IsSuccessfulResult())
+                folders = _apiHelper.Deserialize<List<FolderDTO>>(result.Content);
+            return Json(new { hasvalue = true, html = ViewHelper.RenderViewAsync(this,"_FolderFilter",folders,true).Result });
         }
         public IActionResult Profile()//needs work
         {

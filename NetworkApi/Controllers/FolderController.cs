@@ -21,9 +21,9 @@ namespace NetworkApi.Controllers
             _mediator = mediator;
         }
         [HttpGet("Users/{userId}/Folders")]
-        public async Task<IActionResult> GetFolders(Guid userId, [FromQuery]bool IncludePublics = false)
+        public async Task<IActionResult> GetFolders(Guid userId, [FromQuery]bool IncludePublics = false, [FromQuery] string? FilterByIconId = "", [FromQuery] string? FilterByFolderName = "")
         {
-            return Ok(await _mediator.Send(new GetFolderListRequest() { UserId = userId, IncludePublics = IncludePublics }));
+            return Ok(await _mediator.Send(new GetFolderListRequest() { UserId = userId, IncludePublics = IncludePublics, FolderIconFilter = FilterByIconId, FolderNameFilter = FilterByFolderName }));
         }
         [HttpGet("Folders/{id}")]
         public async Task<IActionResult> GetFolder(Guid id)
