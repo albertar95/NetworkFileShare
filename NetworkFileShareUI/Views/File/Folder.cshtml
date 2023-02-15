@@ -42,7 +42,7 @@
                                 </tr>
                             </thead>
                             <tbody class="list" id="fileRows">
-                                @foreach (var file in Model.Files.OrderByDescending(p => p.CreateDate))
+                                @foreach (var file in Model.Files.Where(p => p.FileExt.ToLower() != ".config").OrderByDescending(p => p.CreateDate))
                                 {
                                     <tr>
                                         <td>

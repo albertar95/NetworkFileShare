@@ -49,6 +49,20 @@
                             break;
                     }
                 </div>
+                <div class="row align-items-center py-4">
+                    <div class="col-lg-6 col-md-6 pl-5">
+                        @if (!string.IsNullOrWhiteSpace(Model.PreFile))
+                        {
+                            <a href="@Url.Action("ViewFile","File",new { Id = Model.PreFile})" class="btn btn-lg btn-outline-default"><i class="fa fa-arrow-circle-left"></i> prev </a>
+                        }
+                    </div>
+                    <div class="col-lg-6 col-md-6 text-right pr-5">
+                        @if (!string.IsNullOrWhiteSpace(Model.NextFile))
+                        {
+                         <a href="@Url.Action("ViewFile","File",new { Id = Model.NextFile})" class="btn btn-lg btn-outline-default"> next <i class="fa fa-arrow-circle-right"></i></a>   
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     </div>

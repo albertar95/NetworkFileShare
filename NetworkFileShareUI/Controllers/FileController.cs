@@ -4,6 +4,7 @@ using Application.DTO.Folder;
 using Application.Helpers;
 using Application.Helpers.Contract;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NetworkFileShareUI.ViewModels;
 using System.IO;
@@ -12,6 +13,7 @@ using System.Reflection;
 
 namespace NetworkFileShareUI.Controllers
 {
+    [Authorize]
     public class FileController : Controller
     {
         private readonly IApiHelper _apiHelper;
@@ -100,6 +102,13 @@ namespace NetworkFileShareUI.Controllers
             if (result.IsSuccessfulResult()) 
             {
                 var file = _apiHelper.Deserialize<FileDTO>(result.Content);
+                var Navresult = await _apiHelper.Call(ApiHelper.HttpMethods.Get, $"{_baseAddress}/Files/{Id}/Navigation");
+                if(Navresult.IsSuccessfulResult()) 
+                {
+                    var navs = _apiHelper.Deserialize<string[]>(Navresult.Content);
+                    model.PreFile = navs[0];
+                    model.NextFile = navs[1];
+                }
                 model.FileType = FindFileType(file.FileExt);
                 if(file.FolderTypeName.ToLower() == "simple")
                     model.FileSource = $"{_FSAddress}/{file.FolderPath.Split('\\').LastOrDefault()}/{file.Name}";

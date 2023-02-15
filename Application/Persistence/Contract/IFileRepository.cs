@@ -12,5 +12,6 @@ namespace Application.Persistence.Contract
     {
         Task<Domain.File> GetFile(Guid id,bool IncludeAll = true);
         Task<List<Domain.File>> GetFiles(Guid FolderId);
+        Task<string[]> GetFileNavigation(Guid Id);
     }
 }

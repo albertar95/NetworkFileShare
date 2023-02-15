@@ -8,5 +8,7 @@
         public string FileType { get; set; }
         public string FileSource { get; set; }
         public string FileExt { get; set; }
+        public string PreFile { get; set; }
+        public string NextFile { get; set; }
     }
 }

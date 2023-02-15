@@ -37,5 +37,10 @@ namespace NetworkApi.Controllers
         {
             return Ok(await _mediator.Send(new DeleteFileRequest() { Id = id }));
         }
+        [HttpGet("Files/{id}/Navigation")]
+        public async Task<IActionResult> GetFileNavigations(Guid id)
+        {
+            return Ok(await _mediator.Send(new GetFileNavRequest() { Id = id }));
+        }
     }
 }
