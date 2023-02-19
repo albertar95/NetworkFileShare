@@ -22,5 +22,6 @@ namespace Domain
         public virtual FolderIcon FolderIcon { get; set; }
         public virtual AccessLevel AccessLevel { get; set; }
         public virtual ICollection<File> Files { get; set; }
+        public virtual ICollection<SubFolder> SubFolders { get; set; }
     }
 }

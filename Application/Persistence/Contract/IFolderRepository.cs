@@ -12,6 +12,7 @@ namespace Application.Persistence.Contract
     {
         Task<Folder> GetFolder(Guid id,bool IncludeAll = true);
         Task<List<Folder>> GetFolders(Guid UserId,bool IncludePublics = false,string FolderIconId = "",string FolderName = "");
+        Task<List<SubFolder>> GetSubFolders(Guid RootFolderId, Guid? ParentFolderId);
         Task<List<FolderIcon>> GetFolderIcons();
         Task<List<FolderType>> GetFolderTypes();
         Task<List<FolderColor>> GetFolderColors();

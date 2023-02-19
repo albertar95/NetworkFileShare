@@ -65,5 +65,15 @@ namespace NetworkApi.Controllers
         {
             return Ok(await _mediator.Send(new GetFolderColorListRequest()));
         }
+        [HttpGet("Folders/{id}/SubFolders")]
+        public async Task<IActionResult> GetRootFolderSubFolders(Guid id)
+        {
+            return Ok(await _mediator.Send(new GetSubFoldersRequest() { RootFolderId = id }));
+        }
+        [HttpGet("Folders/{rootId}/SubFolders/{id}")]
+        public async Task<IActionResult> GetSubFolderSubFolders(Guid rootId,Guid id)
+        {
+            return Ok(await _mediator.Send(new GetSubFoldersRequest() { RootFolderId = rootId, ParentFolderId = id }));
+        }
     }
 }

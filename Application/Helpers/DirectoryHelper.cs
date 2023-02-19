@@ -1,5 +1,8 @@
 ﻿using Application.DTO.File;
 using Application.DTO.Folder;
+using Application.DTO.SubFolder;
+using Application.DTO.SubFolderFile;
+using Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Web.Administration;
 using System;
@@ -42,14 +45,14 @@ namespace Application.Helpers
                 {
                     formFile.CopyTo(stream);
                 }
-                return File.Exists(Path.Combine(path, formFile.FileName));
+                return System.IO.File.Exists(Path.Combine(path, formFile.FileName));
             }
             else
                 return false;
         }
         public static void RemoveFile(string path) 
         {
-            File.Delete(path);
+            System.IO.File.Delete(path);
         }
         public static List<CreateFileDTO> ProbeFolder(Guid folderId,Guid accessLevelId,string path) 
         {
@@ -61,6 +64,53 @@ namespace Application.Helpers
                 {
                     AccessLevelId = accessLevelId,
                     FolderId = folderId,
+                    FileExt = Path.GetExtension(file.Name),
+                    Name = file.Name,
+                    FileLength = GetFileLength(file.Length)
+                });
+            }
+            return result;
+        }
+        public static List<CreateSubFolderDTO> ProbeSubFolder(Guid folderId, string path)
+        {
+            List<CreateSubFolderDTO> result = new List<CreateSubFolderDTO>();
+            DirectoryInfo di = new DirectoryInfo(NormilizePath(path));
+            foreach (var dir in di.GetDirectories())
+            {
+                result.Add(new CreateSubFolderDTO()
+                {
+                    RootFolderId = folderId,
+                    Name = dir.Name,
+                    Path = dir.FullName
+                });
+            }
+            return result;
+        }
+        public static List<CreateSubFolderDTO> ProbeSubFolderSubs(Guid RootId, Guid folderId, string path)
+        {
+            List<CreateSubFolderDTO> result = new List<CreateSubFolderDTO>();
+            DirectoryInfo di = new DirectoryInfo(NormilizePath(path));
+            foreach (var dir in di.GetDirectories())
+            {
+                result.Add(new CreateSubFolderDTO()
+                {
+                    RootFolderId = RootId,
+                    ParentFolderId = folderId,
+                    Name = dir.Name,
+                    Path = dir.FullName
+                });
+            }
+            return result;
+        }
+        public static List<CreateSubFolderFileDTO> ProbeSubFolderFiles(Guid folderId, string path)
+        {
+            List<CreateSubFolderFileDTO> result = new List<CreateSubFolderFileDTO>();
+            DirectoryInfo di = new DirectoryInfo(NormilizePath(path));
+            foreach (var file in di.GetFiles())
+            {
+                result.Add(new CreateSubFolderFileDTO()
+                {
+                    SubFolderId = folderId,
                     FileExt = Path.GetExtension(file.Name),
                     Name = file.Name,
                     FileLength = GetFileLength(file.Length)

@@ -1,6 +1,7 @@
 ﻿using Application.DTO.AccessLevel;
 using Application.DTO.File;
 using Application.DTO.Folder;
+using Application.DTO.SubFolder;
 using Application.Helpers;
 using Application.Helpers.Contract;
 using Domain;
@@ -9,7 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using NetworkFileShareUI.ViewModels;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
+using System.Security.Policy;
 
 namespace NetworkFileShareUI.Controllers
 {
@@ -39,6 +42,9 @@ namespace NetworkFileShareUI.Controllers
                     var fileResult = await _apiHelper.Call(ApiHelper.HttpMethods.Get, $"{_baseAddress}/Folders/{Id}/Files");
                     if (fileResult.IsSuccessfulResult())
                         model.Files = _apiHelper.Deserialize<List<FileDTO>>(fileResult.Content);
+                    var subFolderResult = await _apiHelper.Call(ApiHelper.HttpMethods.Get, $"{_baseAddress}/Folders/{Id}/SubFolders");
+                    if (subFolderResult.IsSuccessfulResult())
+                        model.SubFolders = _apiHelper.Deserialize<List<SubFolderDTO>>(subFolderResult.Content);
                     var accesslevelResult = await _apiHelper.Call(ApiHelper.HttpMethods.Get, $"{_baseAddress}/Folders/Accesslevels");
                     if (accesslevelResult.IsSuccessfulResult())
                         model.AccessLevels = _apiHelper.Deserialize<List<AccessLevelDTO>>(accesslevelResult.Content);
@@ -124,14 +130,12 @@ namespace NetworkFileShareUI.Controllers
         public async Task<IActionResult> DownloadFile(Guid Id)
         {
             var result = await _apiHelper.Call(ApiHelper.HttpMethods.Get, $"{_baseAddress}/Files/{Id}");
-            if(result.IsSuccessfulResult()) 
+            if (result.IsSuccessfulResult())
             {
                 var file = _apiHelper.Deserialize<FileDTO>(result.Content);
-                var currentFile = System.IO.File.ReadAllBytes(Path.Combine(file.FolderPath,file.Name));
+                var currentFile = System.IO.File.ReadAllBytes(Path.Combine(file.FolderPath, file.Name));
                 var content = new System.IO.MemoryStream(currentFile);
-                var contentType = "APPLICATION/octet-stream";
-                var fileName = file.Name;
-                return File(content, contentType, fileName);
+                return File(content, "APPLICATION/octet-stream", file.Name);
             }
             else
                 return RedirectToAction("Error", new { code = (int)result.ResultCode });

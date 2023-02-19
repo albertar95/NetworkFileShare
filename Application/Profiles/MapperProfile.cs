@@ -4,6 +4,8 @@ using Application.DTO.Folder;
 using Application.DTO.FolderColor;
 using Application.DTO.FolderIcon;
 using Application.DTO.FolderType;
+using Application.DTO.SubFolder;
+using Application.DTO.SubFolderFile;
 using Application.DTO.User;
 using AutoMapper;
 using Domain;
@@ -45,6 +47,14 @@ namespace Application.Profiles
             CreateMap<FolderIcon, FolderIconDTO>().ReverseMap();
             CreateMap<FolderType, FolderTypeDTO>().ReverseMap();
             CreateMap<AccessLevel, AccessLevelDTO>().ReverseMap();
+            //sub folders
+            CreateMap<SubFolder,SubFolderDTO>().ReverseMap();
+            CreateMap<SubFolder, CreateSubFolderDTO>();
+            CreateMap<CreateSubFolderDTO, SubFolder>().BeforeMap((s,d) => { d.CreateDate = DateTime.Now; d.Id = Guid.NewGuid(); });
+            //sub folder files
+            CreateMap<SubFolderFile, SubFolderFileDTO>().ReverseMap();
+            CreateMap<SubFolderFile, CreateSubFolderFileDTO>();
+            CreateMap<CreateSubFolderFileDTO, SubFolderFile>().BeforeMap((s, d) => { d.CreateDate = DateTime.Now; d.Id = Guid.NewGuid(); });
         }
     }
 }

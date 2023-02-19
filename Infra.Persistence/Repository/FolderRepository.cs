@@ -100,5 +100,13 @@ namespace Infra.Persistence.Repository
         {
             return await _context.FolderIcons.ToListAsync();
         }
+
+        public async Task<List<SubFolder>> GetSubFolders(Guid RootFolderId, Guid? ParentFolderId)
+        {
+            if (ParentFolderId == null)
+                return await _context.SubFolders.Where(p => p.RootFolderId == RootFolderId).ToListAsync();
+            else
+                return await _context.SubFolders.Where(p => p.RootFolderId == RootFolderId && p.ParentFolderId == ParentFolderId).ToListAsync();
+        }
     }
 }
